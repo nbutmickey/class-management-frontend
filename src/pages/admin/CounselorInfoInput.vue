@@ -3,18 +3,15 @@
       <div class="counselor-info">
         <el-tabs tab-position="left" >
           <el-tab-pane label="手动录入">
-            <el-form ref="teacherform" :model="teacherInfoInput" label-width="80px" size="mini" :rules="teacherInfoRules">
+            <el-form ref="counselorform" :model="counselorInfoInput" label-width="80px" size="mini" :rules="counselorInfoRules">
               <el-form-item label="工号:" prop="jobId">
-                <el-input v-model="teacherInfoInput.jobId" placeholder="请输入工号"></el-input>
+                <el-input v-model="counselorInfoInput.jobId" placeholder="请输入工号"></el-input>
               </el-form-item>
               <el-form-item label="姓名:" prop="name">
-                <el-input v-model="teacherInfoInput.name" placeholder="请输入姓名"></el-input>
-              </el-form-item>
-              <el-form-item label="密码:" prop="pwd">
-                <el-input v-model="teacherInfoInput.pwd"  placeholder="请输入密码"></el-input>
+                <el-input v-model="counselorInfoInput.name" placeholder="请输入姓名"></el-input>
               </el-form-item>
               <el-form-item label="所属学院:" prop="collegeId">
-                <el-select v-model="teacherInfoInput.collegeId" placeholder="请选择学院" @change="getclassinfo">
+                <el-select v-model="counselorInfoInput.collegeId" placeholder="请选择学院" @change="getclassinfo">
                   <el-option
                     v-for="item in collegeOptions"
                     :key="item.collegeId"
@@ -24,7 +21,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="管理班级:" prop="classId">
-                <el-select v-model="teacherInfoInput.classId" multiple placeholder="请选择班级">
+                <el-select v-model="counselorInfoInput.classId" multiple placeholder="请选择班级">
                   <el-option
                     v-for="item in classOptions"
                     :key="item.classId"
@@ -34,17 +31,17 @@
                 </el-select>
               </el-form-item>
               <el-form-item size="large">
-                <el-button type="primary" @click="submitstuinfo">提交信息</el-button>
+                <el-button type="primary" @click="submitcounselorinfo">提交信息</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="Excel批量导入">
             <upload-excel :on-success="handleSuccess" :before-upload="beforeUpload"/>
             <h4 style="text-align: center;">以下是需要上传的表格数据</h4>
-            <el-table :data="tableData" border highlight-current-row style="width: 100%;margin-top: 20px">
+            <el-table :data="tableData" background style="width: 100%;margin-top: 20px">
               <el-table-column v-for="item in tableHeader" :prop="item" :label="item" :key="item"></el-table-column>
             </el-table>
-            <el-button @click="submitexcelstuinfo" style="width: 100%;margin-top: 20px" type="primary">上传数据<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button @click="submitexcelcouninfo" style="width: 100%;margin-top: 20px" type="primary">上传数据<i class="el-icon-upload el-icon--right"></i></el-button>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -59,13 +56,13 @@
       components:{uploadExcel},
       data(){
         const validateJobId=(rule,value,callback)=>{
-          // this.$store.dispatch('CheckRepeatStudent',value).then((res)=>{
-          //   if(res.success){
-          //     callback();
-          //   }else{
-          //     callback(new Error(res.message));
-          //   }
-          // })
+          this.$store.dispatch('CheckRepeat',{value:value,type:'counselor'}).then((res)=>{
+            if(res.status){
+              callback();
+            }else{
+              callback(new Error(res.note));
+            }
+          })
         }
         const validateJobId2=(rule,value,callback)=>{
           if(!Number.parseInt(value)){
@@ -77,14 +74,13 @@
           }
         }
         return {
-          teacherInfoInput:{
+          counselorInfoInput:{
             jobId:'',
             name:'',
-            pwd:'',
             collegeId:'',
-            classId:''
+            classId:[]
           },
-          teacherInfoRules:{
+          counselorInfoRules:{
             jobId:[{required:true,trigger:'blur',validator:validateJobId2},{required:true,trigger:'blur',validator:validateJobId}]
           },
           classOptions:[],
@@ -99,19 +95,48 @@
       methods:{
         getclassinfo:function (collegeId) {
           this.$store.dispatch('GetClassInfo',collegeId).then((res)=>{
-            this.classOptions=res.data;
+            this.classOptions=res.content;
           })
         },
         getcollegeinfo:function () {
           this.$store.dispatch('GetCollegeInfo').then((res)=>{
-            this.collegeOptions=res.data;
+            this.collegeOptions=res.content;
           })
         },
-        submitstuinfo:function(){
-
+        submitcounselorinfo:function(){
+          console.log(this.counselorInfoInput);
+          this.$store.dispatch('SubmitInfo',{info:this.counselorInfoInput,type:'counselor'}).then((res)=>{
+            if(res.status){
+              this.$message.success(res.note);
+              this.$refs['counselorform'].resetFields();
+            }else{
+              this.$message.error(res.note);
+            }
+          })
         },
-        submitexcelstuinfo:function () {
+        submitexcelcouninfo:function () {
+          let counselorInfo={
+            multipleInfo:[],
+          };
+          counselorInfo.multipleInfo=this.tableData.map(function (item) {
+            return {jobId:item.jobId,name:item.name,collegeId:item.collegeId,classList:item.classList.split('/')}
+          });
 
+          this.$store.dispatch('SubmitExcelInfo',{info:counselorInfo.multipleInfo,type:'counselor'}).then(res=>{
+            if(res.status){
+              this.$message({
+                message:res.note,
+                type:'success'
+              })
+              this.tableData=[];
+              this.tableHeader=[];
+            }else{
+              this.$message({
+                message:res.note,
+                type:'error'
+              })
+            }
+          })
         },
         beforeUpload(file){
           const isLt1M=file.size/1024/1024<1;

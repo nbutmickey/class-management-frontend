@@ -1,4 +1,14 @@
-import {getClassInfo,getCollegeInfo,submitStuInfo,submitExcelInfo,checkRepeat} from "../../api/admin";
+import {getClassInfo,
+        getCollegeInfo,
+        submitInfo,
+        submitExcelInfo,
+        checkRepeat,
+        getBuildInfo,
+        getBedRoomChiefList,
+        getBedRoomInfo,
+        checkBedRoomChief,
+        changeBedRoom
+    } from "../../api/admin";
 const admin={
   actions:{
     GetClassInfo({commit},collegeId){
@@ -16,23 +26,58 @@ const admin={
         })
       })
     },
-    CheckRepeatStudent({commit},studentId){
+    GetBuildInfo({commit},{currentPage,pageSize}){
       return new Promise((resolve,reject)=>{
-        checkRepeat(studentId).then((res)=>{
+          getBuildInfo(currentPage,pageSize).then((res)=>{
+            resolve(res);
+          })
+      })
+    },
+    GetBedRoomInfo({commit},{buildId,bedRoomId}){
+      return new Promise((resolve,reject)=>{
+          getBedRoomInfo(buildId,bedRoomId).then((res)=>{
+            resolve(res);
+          })
+      })
+    },
+    CheckBedRoomChief({commit},{studentId,attitude}){
+      return new Promise((resolve,reject)=>{
+        checkBedRoomChief(studentId,attitude).then(res=>{
           resolve(res);
         })
       })
     },
-    SubmitStuInfo({commit},stuInfo){
+    ChangeBedRoom({coomit},{studentId,buildId,bedRoomId}){
       return new Promise((resolve,reject)=>{
-        submitStuInfo(stuInfo).then((res)=>{
+        changeBedRoom(studentId,buildId,bedRoomId).then(res=>{
           resolve(res);
         })
       })
     },
-    SubmitExcelStuInfo({commit},stuInfo){
+    GetBedRoomChiefList({commit}){
       return new Promise((resolve,reject)=>{
-        submitExcelInfo(stuInfo).then((res)=>{
+          getBedRoomChiefList().then(res=>{
+            resolve(res);
+          })
+      })
+    },
+    CheckRepeat({commit},info){
+      return new Promise((resolve,reject)=>{
+        checkRepeat(info.value,info.type).then((res)=>{
+          resolve(res);
+        })
+      })
+    },
+    SubmitInfo({commit},allInfo){
+      return new Promise((resolve,reject)=>{
+        submitInfo(allInfo.info,allInfo.type).then((res)=>{
+          resolve(res);
+        })
+      });
+    },
+    SubmitExcelInfo({commit},allInfo){
+      return new Promise((resolve,reject)=>{
+        submitExcelInfo(allInfo.info,allInfo.type).then((res)=>{
           resolve(res);
         })
       })

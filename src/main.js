@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import {getToken} from './utils/auth'
+import { getToken } from './utils/auth'
 import {Message} from 'element-ui'
 // import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
@@ -50,8 +50,8 @@ router.beforeEach((to,from,next)=>{
   }
 })
 
-
 Vue.config.productionTip = false
+
 new Vue({
   el: '#app',
   router,

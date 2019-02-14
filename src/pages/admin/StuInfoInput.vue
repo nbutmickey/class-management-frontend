@@ -10,9 +10,6 @@
               <el-form-item label="姓名:" prop="name">
                 <el-input v-model="stuInfoInput.name" placeholder="请输入姓名"></el-input>
               </el-form-item>
-              <el-form-item label="密码:" prop="pwd">
-                <el-input v-model="stuInfoInput.pwd" placeholder="请输入密码"></el-input>
-              </el-form-item>
               <el-form-item label="性别:" prop="sex">
                 <el-radio-group v-model="stuInfoInput.sex" size="medium">
                   <el-radio  label="男"></el-radio>
@@ -95,7 +92,7 @@
         <el-tab-pane label="Excel批量导入">
             <upload-excel :on-success="handleSuccess" :before-upload="beforeUpload"/>
             <h4 style="text-align: center;">以下是需要上传的表格数据</h4>
-            <el-table :data="tableData" border highlight-current-row style="width: 100%;margin-top: 20px">
+            <el-table :data="tableData" background  style="width: 100%;margin-top: 20px">
               <el-table-column v-for="item in tableHeader" :prop="item" :label="item" :key="item"></el-table-column>
             </el-table>
             <el-button @click="submitexcelstuinfo" style="width: 100%;margin-top: 20px" type="primary">上传数据<i class="el-icon-upload el-icon--right"></i></el-button>
@@ -121,11 +118,11 @@
         },
         data(){
           const validateStudentId=(rule,value,callback)=>{
-            this.$store.dispatch('CheckRepeatStudent',value).then((res)=>{
-                  if(res.success){
+            this.$store.dispatch('CheckRepeat',{value:value,type:'student'}).then((res)=>{
+                  if(res.status){
                        callback();
                   }else{
-                    callback(new Error(res.message));
+                    callback(new Error(res.note));
                   }
             })
             }
@@ -166,7 +163,6 @@
               studentId:'',
               name:'',
               sex:'',
-              pwd:'',
               collegeId:'',
               classId:'',
               birthplace:'',
@@ -175,7 +171,6 @@
               contact:'',
               position:'',
               other:'',
-              role:''
             }
           }
         },
@@ -185,27 +180,28 @@
       methods:{
           getclassinfo:function (collegeId) {
             this.$store.dispatch('GetClassInfo',collegeId).then((res)=>{
-                this.classOptions=res.data;
+                this.classOptions=res.content;
             })
           },
           getcollegeinfo:function () {
             this.$store.dispatch('GetCollegeInfo').then((res)=>{
-              this.collegeOptions=res.data;
+              this.collegeOptions=res.content;
             })
           },
+          //上传学生信息
           submitstuinfo:function () {
             this.stuInfoInput.birthplace=this.birthplace.join('');
-            this.stuInfoInput.role='student';
-            this.$store.dispatch('SubmitStuInfo',this.stuInfoInput).then((res)=>{
-              if(res.success){
-                  this.$message.success(res.message);
-                  this.$refs['stuform'].resetFields();
-                  this.birthplace=[];
+            this.$store.dispatch('SubmitInfo',{info:this.stuInfoInput,type:'student'}).then((res)=>{
+              if(res.status){
+                this.$message.success(res.note);
+                this.$refs['stuform'].resetFields();
+                this.birthplace=[];
               }else{
-                  this.$message.error(res.message);
+                this.$message.error(res.note);
               }
             })
           },
+          //批量上传学生信息
           submitexcelstuinfo:function(){
               //对表格中的数据进行合法性验证。验证通过才可以上传。
               // for(let i=0;i<this.tableData.length;i++){
@@ -215,18 +211,19 @@
               let stuInfo={
                 multipleInfo:[],
               };
-               stuInfo.multipleInfo=this.tableData;
-              this.$store.dispatch('SubmitExcelStuInfo',stuInfo).then(res=>{
-                if(res.success){
+              stuInfo.multipleInfo=this.tableData;
+              console.log(stuInfo.multipleInfo);
+              this.$store.dispatch('SubmitExcelInfo',{info:stuInfo.multipleInfo,type:'student'}).then(res=>{
+                if(res.status){
                   this.$message({
-                    message:res.message,
+                    message:res.note,
                     type:'success'
                   })
                   this.tableData=[];
                   this.tableHeader=[];
                 }else{
                   this.$message({
-                    message:res.message,
+                    message:res.note,
                     type:'error'
                   })
                 }

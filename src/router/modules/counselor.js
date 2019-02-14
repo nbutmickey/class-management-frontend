@@ -2,29 +2,29 @@ import Layout from '@/pages/Layout'
 const counselorRouter = {
   path:'/',
   component:Layout,
-  redirect:'/index',
+  redirect:'/classCommitteeInfo',
   alwaysShow:true,
   meta:{
     title:'我的主页',
     role:['counselor']
   },
   children:[
-    {
-      path: 'index',
-      component: () => import('@/pages/counselor/index'),
-      name:'index',
-      meta:{
-        title:'个人主页',
-        icon:'personal',
-        role:['counselor']
-      }
-    },
+    // {
+    //   path: 'index',
+    //   component: () => import('@/pages/counselor/index'),
+    //   name:'index',
+    //   meta:{
+    //     title:'个人主页',
+    //     icon:'personal',
+    //     role:['counselor']
+    //   }
+    // },
     {
       path: 'classCommitteeInfo',
       component: () => import('@/pages/counselor/ClassCommitteeInfo'),
       name:'classCommitteeInfo',
       meta:{
-        title:'班级班委信息管理',
+        title:'班级班委信息',
         icon:'class-committee',
         role:['counselor']
       }
@@ -44,7 +44,7 @@ const counselorRouter = {
       component: () => import('@/pages/counselor/PoorStudentInfo'),
       name:'poorStudentInfo',
       meta:{
-        title:'贫困生申请信息',
+        title:'贫困生信息',
         icon:'poor-info',
         role:['counselor']
       }

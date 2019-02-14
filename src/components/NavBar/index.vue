@@ -9,7 +9,7 @@
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item><svg-icon icon-class="role"/> {{role[0]}}</el-dropdown-item>
+        <el-dropdown-item><svg-icon icon-class="role"/> {{roleName}}</el-dropdown-item>
         <el-dropdown-item><svg-icon icon-class="username"/> {{account}}</el-dropdown-item>
         <el-dropdown-item><svg-icon icon-class="logout" style="font-size: 20px"/><span @click="logOut">退出登录</span></el-dropdown-item>
       </el-dropdown-menu>
@@ -25,6 +25,22 @@
   export default {
         name: "index",
         components:{hamburger,breadcrumb},
+        data(){
+          return {
+            roleName:''
+          }
+        },
+        created(){
+          if(this.role[0]==='admin'){
+            this.roleName="管理员";
+          }else if(this.role[0]==='student'){
+            this.roleName="学生";
+          }else if(this.role[0]==='counselor'){
+            this.roleName="辅导员";
+          }else if(this.role[0]==='classteacher'){
+            this.roleName="班主任";
+          }
+        },
         computed:{
           ...mapGetters([
             'sidebar',
