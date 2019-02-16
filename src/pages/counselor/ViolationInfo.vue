@@ -26,36 +26,15 @@ export default {
   name: "ViolationInfo",
   data() {
     return {
-      violationInfo: [
-        {
-          className: "网络171",
-          stuInfo: [
-            {
-              stuName: "米奇",
-              Info: [
-                {
-                  violationContent: "1213",
-                  violationTime: "123",
-                  violationDegree: 2
-                }
-              ]
-            },
-            {
-              stuName: "梁鑫",
-              Info: [
-                {
-                  violationContent: "1213",
-                  violationTime: "123",
-                  violationDegree: 2
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      violationInfo: [],
       show: false,
-      detailInfo: {}
+      detailInfo: []
     };
+  },
+  created(){
+    this.$store.dispatch('AllStuVioList',2007010901).then(res=>{
+      this.violationInfo=res.content;
+    })
   },
   components: {
     CardInfoItem,

@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card v-if="classObj.stuInfo.length!==0">
       <div slot="header" class="clearfix">
         <span>{{ classObj.className }}</span>
       </div>
@@ -25,6 +25,7 @@ export default {
   props: ["classObj"],
   methods:{
     getDetail:function (item) {
+      //console.log(item);
       this.$emit('get-detail',item)
     }
   }
