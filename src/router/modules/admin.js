@@ -15,7 +15,7 @@ const adminRouter= {
       name:'classTeacherInfoInput',
       meta:{
         title:'班主任信息管理',
-        icon:'manage-classteacher',
+        icon:'fa fa-cog fa-fw',
         role:['admin']
       }
     },
@@ -25,7 +25,7 @@ const adminRouter= {
       name:'counselorInfoInput',
       meta:{
         title:'辅导员信息管理',
-        icon:'manage',
+        icon:'fa fa-cog fa-fw',
         role:['admin']
       }
     },
@@ -35,7 +35,7 @@ const adminRouter= {
       name:'studentInfoInput',
       meta:{
         title:'学生信息管理',
-        icon:'manage-student',
+        icon:'fa fa-cog fa-fw',
         role:['admin']
       }
     },
@@ -45,7 +45,7 @@ const adminRouter= {
       name:'dormitoryManage',
       meta:{
         title:'宿舍管理',
-        icon:'manage-dormitory',
+        icon:'fa fa-cog fa-fw',
         role:['admin']
       }
     }

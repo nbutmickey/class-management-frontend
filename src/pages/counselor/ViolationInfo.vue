@@ -22,6 +22,7 @@
 <script>
 import CardInfoItem from "@/components/CardInfoItem";
 import InfoDetail from "@/components/InfoDetail";
+import {mapGetters} from 'vuex';
 export default {
   name: "ViolationInfo",
   data() {
@@ -31,8 +32,11 @@ export default {
       detailInfo: []
     };
   },
+  computed:{
+    ...mapGetters(['account'])
+  },
   created(){
-    this.$store.dispatch('AllStuVioList',2007010901).then(res=>{
+    this.$store.dispatch('AllStuVioList',this.account).then(res=>{
       this.violationInfo=res.content;
     })
   },

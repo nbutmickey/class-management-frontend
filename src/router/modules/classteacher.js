@@ -2,7 +2,7 @@ import Layout from '@/pages/Layout'
 const classteacherRouter = {
   path:'/',
   component:Layout,
-  redirect:'/index',
+  redirect:'/workplanSet',
   alwaysShow:true,
   meta:{
     title:'我的主页',
@@ -10,22 +10,12 @@ const classteacherRouter = {
   },
   children:[
     {
-      path: 'index',
-      component: () => import('@/pages/classteacher/index'),
-      name:'index',
+      path: 'workplanSet',
+      component: () => import('@/pages/classteacher/WorkPlanSet'),
+      name:'workplanSet',
       meta:{
-        title:'个人主页',
-        icon:'user',
-        role:['classteacher']
-      }
-    },
-    {
-      path: 'studentInfo',
-      component: () => import('@/pages/classteacher/studentInfo'),
-      name:'studentInfo',
-      meta:{
-        title:'学生基本信息',
-        icon:'user',
+        title:'工作计划',
+        icon:'fa fa-paper-plane fa-fw',
         role:['classteacher']
       }
     },
@@ -35,37 +25,17 @@ const classteacherRouter = {
       name:'committeeSet',
       meta:{
         title:'班委设置',
-        icon:'user',
+        icon:'fa fa-cog fa-fw',
         role:['classteacher']
       }
     },
     {
-      path: 'poorStudentInfo',
-      component: () => import('@/pages/classteacher/PoorStudentInfo'),
-      name:'poorStudentInfo',
+      path: 'checkPoorStudent',
+      component: () => import('@/pages/classteacher/CheckPoorStudent'),
+      name:'checkPoorStudent',
       meta:{
-        title:'经济困难学生信息',
-        icon:'user',
-        role:['classteacher']
-      }
-    },
-    {
-      path: 'accommodationInfo',
-      component: () => import('@/pages/classteacher/AccommodationInfo'),
-      name:'accommodationInfo',
-      meta:{
-        title:'学生住宿情况',
-        icon:'user',
-        role:['classteacher']
-      }
-    },
-    {
-      path: 'workplanSet',
-      component: () => import('@/pages/classteacher/WorkPlanSet'),
-      name:'workplanSet',
-      meta:{
-        title:'工作计划',
-        icon:'user',
+        title:'审批贫困生',
+        icon:'fa fa-cog fa-fw',
         role:['classteacher']
       }
     },
@@ -75,7 +45,7 @@ const classteacherRouter = {
       name:'classmeetingRecord',
       meta:{
         title:'班会记录',
-        icon:'user',
+        icon:'fa fa-pencil-square fa-fw',
         role:['classteacher']
       }
     },
@@ -84,8 +54,8 @@ const classteacherRouter = {
       component: () => import('@/pages/classteacher/CheckDormitoryRecord'),
       name:'checkdormitoryRecord',
       meta:{
-        title:'下寝室记录',
-        icon:'user',
+        title:'查寝室记录',
+        icon:'fa fa-pencil-square fa-fw',
         role:['classteacher']
       }
     },
@@ -95,7 +65,7 @@ const classteacherRouter = {
       name:'stutalkRecord',
       meta:{
         title:'学生谈话记录',
-        icon:'user',
+        icon:'fa fa-pencil-square fa-fw',
         role:['classteacher']
       }
     },
@@ -105,7 +75,47 @@ const classteacherRouter = {
       name:'emergencyRecord',
       meta:{
         title:'突发事件记录',
-        icon:'user',
+        icon:'fa fa-pencil-square fa-fw',
+        role:['classteacher']
+      }
+    },
+    {
+      path: 'violationRecord',
+      component: () => import('@/pages/classteacher/ViolationRecord'),
+      name:'violationRecord',
+      meta:{
+        title:'学生违纪记录',
+        icon:'fa fa-pencil-square fa-fw',
+        role:['classteacher']
+      }
+    },
+    {
+      path: 'studentInfo',
+      component: () => import('@/pages/classteacher/studentInfo'),
+      name:'studentInfo',
+      meta:{
+        title:'学生基本信息',
+        icon:'fa fa-inbox fa-fw',
+        role:['classteacher']
+      }
+    },
+    {
+      path: 'poorStudentInfo',
+      component: () => import('@/pages/classteacher/PoorStudentInfo'),
+      name:'poorStudentInfo',
+      meta:{
+        title:'经济困难学生信息',
+        icon:'fa fa-inbox fa-fw',
+        role:['classteacher']
+      }
+    },
+    {
+      path: 'accommodationInfo',
+      component: () => import('@/pages/classteacher/AccommodationInfo'),
+      name:'accommodationInfo',
+      meta:{
+        title:'学生住宿情况',
+        icon:'fa fa-inbox fa-fw',
         role:['classteacher']
       }
     },
@@ -114,18 +124,8 @@ const classteacherRouter = {
       component: () => import('@/pages/classteacher/AwardInfo'),
       name:'awardInfo',
       meta:{
-        title:'本班学生获奖情况',
-        icon:'user',
-        role:['classteacher']
-      }
-    },
-    {
-      path: 'violationInfo',
-      component: () => import('@/pages/classteacher/ViolationInfo'),
-      name:'violationInfo',
-      meta:{
-        title:'本班学生违纪情况',
-        icon:'user',
+        title:'学生获奖情况',
+        icon:'fa fa-inbox fa-fw',
         role:['classteacher']
       }
     },
@@ -135,7 +135,7 @@ const classteacherRouter = {
       name:'bedroomHygieneRecord',
       meta:{
         title:'寝室卫生情况',
-        icon:'user',
+        icon:'fa fa-inbox fa-fw',
         role:['classteacher']
       }
     },
@@ -145,7 +145,7 @@ const classteacherRouter = {
       name:'handBook',
       meta:{
         title:'班主任工作手册',
-        icon:'user',
+        icon:'fa fa-address-book-o fa-w',
         role:['classteacher']
       }
     }

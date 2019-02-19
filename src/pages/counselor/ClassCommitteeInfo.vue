@@ -52,6 +52,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
 export default {
   name: "ClassCommitteeInfo",
   data(){
@@ -62,9 +63,12 @@ export default {
   created() {
     this.getClassCommitteeInfo();
   },
+  computed:{
+    ...mapGetters(['account'])
+  },
   methods: {
     getClassCommitteeInfo: function() {
-      this.$store.dispatch("ClassCommitList", 2007010901).then(res => {
+      this.$store.dispatch("ClassCommitList", this.account).then(res => {
         //console.log(res.content);
         this.classPositionInfo=res.content;
       });

@@ -14,61 +14,123 @@ import {checkRepeat,
         awardList,
         classViolationList,
         classActivity,
-        problemTypeList
+        problemTypeList,
+        emergencyInfoList,
+        stuTalkInfoList,
+        classMeetingInfoList,
+        dormitoryInfoList,
+        getClassPoorCheck,
+    approvedPoorByClassTeacher
 } from "../../api/classteacher";
 
 const classteacher={
+  state:{
+    schemeInfo:{
+      jobId:'',
+      semester:'',
+      content:''
+    }
+  },
+  mutations:{
+    SET_SCHEME:(state,schemeInfo)=>{
+      state.schemeInfo.jobId=schemeInfo.jobId;
+      state.schemeInfo.semester=schemeInfo.semester;
+      state.schemeInfo.content=schemeInfo.content;
+    }
+  },
   actions:{
-    ProblemTypeList(){
+    GetClassPoorCheck({commit},jobId){
+      return new Promise((resolve,reject)=>{
+        getClassPoorCheck(jobId).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    ApprovedPoorByClassTeacher({commit},poorAttitude){
+      return new Promise((resolve,reject)=>{
+        approvedPoorByClassTeacher(poorAttitude).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    EmergencyInfoList({commit},jobId){
+      return new Promise((resolve,reject)=>{
+        emergencyInfoList(jobId).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    StuTalkInfoList({commit},jobId){
+      return new Promise((resolve,reject)=>{
+        stuTalkInfoList(jobId).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    ClassMeetingInfoList({commit},jobId){
+      return new Promise((resolve,reject)=>{
+        classMeetingInfoList(jobId).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    DormitoryInfoList({commit},jobId){
+      return new Promise((resolve,reject)=>{
+        dormitoryInfoList(jobId).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    ProblemTypeList({commit}){
       return new Promise((resolve,reject)=>{
         problemTypeList().then(res=>{
           resolve(res);
         })
       })
     },
-    ClassActivity(activity){
+    ClassActivity({commit},activity){
       return new Promise((resolve,reject)=>{
         classActivity(activity).then(res=>{
           resolve(res);
         })
       })
     },
-    ClassViolationList(jobId){
+    ClassViolationList({commit},jobId){
       return new Promise((resolve,reject)=>{
         classViolationList(jobId).then(res=>{
           resolve(res);
         })
       })
     },
-    AwardList(jobId){
+    AwardList({commit},jobId){
       return new Promise((resolve,reject)=>{
         awardList(jobId).then(res=>{
           resolve(res);
         })
       })
     },
-    EmergencyInfo(info){
+    EmergencyInfo({commit},info){
       return new Promise((resolve,reject)=>{
         emergencyInfo(info).then(res=>{
           resolve(res);
         })
       })
     },
-    StudentTalkRecord(talkRecord){
+    StudentTalkRecord({commit},talkRecord){
       return new Promise((resolve,reject)=>{
         studentTalkRecord(talkRecord).then(res=>{
           resolve(res);
         })
       })
     },
-    BedRoomHygiene(hygiene){
+    BedRoomHygiene({commit},hygiene){
       return new Promise((resolve,reject)=>{
         bedRoomHygiene(hygiene).then(res=>{
           resolve(res);
         })
       })
     },
-    ClassDormitoryRecord(dormitoryRecord){
+    ClassDormitoryRecord({commmit},dormitoryRecord){
       return new Promise((resolve,reject)=>{
         classDormitoryRecord(dormitoryRecord).then(res=>{
           resolve(res);
@@ -82,7 +144,7 @@ const classteacher={
         })
       })
     },
-    SetClassPosition({commit,positionInfo}){
+    SetClassPosition({commit},positionInfo){
       return new Promise((resolve,reject)=>{
         setClassPosition(positionInfo).then(res=>{
           resolve(res);
@@ -96,9 +158,9 @@ const classteacher={
         })
       })
     },
-    ClassTeacherSchema({commit},schema){
+    ClassTeacherScheme({commit},scheme){
       return new Promise((resolve,reject)=>{
-        classTeacherScheme(schema).then(res=>{
+        classTeacherScheme(scheme).then(res=>{
           resolve(res);
         })
       })
@@ -110,7 +172,7 @@ const classteacher={
         })
       })
     },
-    Classmeetingnfo({commit},meetingInfo){
+    ClassmeetingInfo({commit},meetingInfo){
       return new Promise((resolve,reject)=>{
         classMeetingRecord(meetingInfo).then(res=>{
           resolve(res);

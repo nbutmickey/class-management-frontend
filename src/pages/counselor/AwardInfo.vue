@@ -22,6 +22,7 @@
 <script>
 import CardInfoItem from "@/components/CardInfoItem";
 import InfoDetail from "@/components/InfoDetail";
+import {mapGetters} from 'vuex'
 export default {
   name: "AwardInfo",
   data() {
@@ -31,12 +32,15 @@ export default {
       detailInfo: []
     };
   },
+  computed:{
+    ...mapGetters(['account'])
+  },
   components: {
     CardInfoItem,
     InfoDetail
   },
   created(){
-    this.$store.dispatch('AllStuAwardList',2007010901).then(res=>{
+    this.$store.dispatch('AllStuAwardList',this.account).then(res=>{
       //console.log(res);
       this.awardInfo=res.content;
     })

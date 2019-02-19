@@ -2,40 +2,30 @@ import Layout from '@/pages/Layout'
 const counselorRouter = {
   path:'/',
   component:Layout,
-  redirect:'/classCommitteeInfo',
+  redirect:'/checkPoorStu',
   alwaysShow:true,
   meta:{
     title:'我的主页',
     role:['counselor']
   },
   children:[
-    // {
-    //   path: 'index',
-    //   component: () => import('@/pages/counselor/index'),
-    //   name:'index',
-    //   meta:{
-    //     title:'个人主页',
-    //     icon:'personal',
-    //     role:['counselor']
-    //   }
-    // },
-    {
-      path: 'classCommitteeInfo',
-      component: () => import('@/pages/counselor/ClassCommitteeInfo'),
-      name:'classCommitteeInfo',
-      meta:{
-        title:'班级班委信息',
-        icon:'class-committee',
-        role:['counselor']
-      }
-    },
     {
       path: 'checkPoorStu',
       component: () => import('@/pages/counselor/CheckPoorStu'),
       name:'checkPoorStu',
       meta:{
         title:'审批贫困生申请',
-        icon:'check-poor',
+        icon:'fa fa-cog fa-fw',
+        role:['counselor']
+      }
+    },
+    {
+      path: 'classCommitteeInfo',
+      component: () => import('@/pages/counselor/ClassCommitteeInfo'),
+      name:'classCommitteeInfo',
+      meta:{
+        title:'班级班委信息',
+        icon:'fa fa-inbox fa-fw',
         role:['counselor']
       }
     },
@@ -45,7 +35,7 @@ const counselorRouter = {
       name:'poorStudentInfo',
       meta:{
         title:'贫困生信息',
-        icon:'poor-info',
+        icon:'fa fa-inbox fa-fw',
         role:['counselor']
       }
     },
@@ -55,7 +45,7 @@ const counselorRouter = {
       name:'studentInfo',
       meta:{
         title:'学生信息',
-        icon:'studentInfo',
+        icon:'fa fa-inbox fa-fw',
         role:['counselor']
       }
     },
@@ -65,7 +55,7 @@ const counselorRouter = {
       name:'awardInfo',
       meta:{
         title:'获奖信息',
-        icon:'awardInfo',
+        icon:'fa fa-inbox fa-fw',
         role:['counselor']
       }
     },
@@ -75,7 +65,7 @@ const counselorRouter = {
       name:'violationInfo',
       meta:{
         title:'违纪信息',
-        icon:'violationInfo',
+        icon:'fa fa-inbox fa-fw',
         role:['counselor']
       }
     }

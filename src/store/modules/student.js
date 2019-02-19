@@ -12,6 +12,14 @@ import {
   getPersonalInfo
   } from '../../api/student'
 const student={
+  state:{
+    stuInfo:{}
+  },
+  mutations:{
+    SET_STU_INFO:(state,stuInfo)=>{
+      state.stuInfo=stuInfo;
+    }
+  },
   actions:{
     ApplyBedRoomChief({commit},applyInfo){
       return new Promise((resolve,reject)=>{

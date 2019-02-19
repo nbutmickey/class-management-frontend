@@ -1,5 +1,5 @@
 <template>
-  <section class="app-main">
+  <section class="app-main" :style="{heghit:bodyHeight+'px'}">
     <transition name="fade-transform" mode="out-in">
       <router-view/>
     </transition>
@@ -9,6 +9,16 @@
 <script>
     export default {
         name: "index",
+        data(){
+          return {
+            bodyHeight:document.documentElement.clientHeight - 60
+          }
+        },
+        mounted(){
+          window.addEventListener('resize',()=>{
+            this.bodyHeight = document.documentElement.clientHeight - 60;
+          })
+        }
     }
 </script>
 

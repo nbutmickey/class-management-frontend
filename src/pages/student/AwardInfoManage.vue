@@ -13,9 +13,17 @@
         <el-button style="float: right" type="text" icon="el-icon-upload2" v-if="showAddItem" @click="submitItem">提交新项目</el-button>
       </div>
       <div v-if="showAddItem">
-        <div style="padding: 5px 0">获奖名称：<el-input size="mini" style="width: 68%"  v-model="addItem.awardName" placeholder="请输入获奖名称"></el-input></div>
-        <div style="padding: 5px 0">获奖日期：<el-date-picker size="mini" type="date" value-format="yyyy-MM-dd" v-model="addItem.awardTime" placeholder="选择日期"></el-date-picker></div>
-      <div style="padding: 5px 0">颁奖单位：<el-input size="mini" style="width: 68%" v-model="addItem.awardAgency" placeholder="请输入颁奖单位" clearable></el-input></div>
+        <el-form :model="addItem" label-width="80px" size="mini" ref="addForm">
+          <el-form-item label="获奖名称" prop="awardName" :rules="{required:true,message:'获奖名称不能为空',trigger:'blur'}">
+            <el-input style="width: 87%" v-model="addItem.activityTopic" placeholder="请输入获奖名称" clearable ></el-input>
+          </el-form-item>
+          <el-form-item label="获奖日期" prop="awardTime" :rules="{required:true,message:'日期不能为空',trigger:'blur'}">
+            <el-date-picker  type="date" v-model="addItem.awardTime" value-format="yyyy-MM-dd" placeholder="选择日期" clearable></el-date-picker>
+          </el-form-item>
+          <el-form-item label="颁奖单位" prop="awardAgency" :rules="{required:true,message:'获奖单位不能为空',trigger:'blur'}">
+            <el-input style="width: 87%" v-model="addItem.awardAgency" placeholder="请输入获奖单位" clearable></el-input>
+          </el-form-item>
+        </el-form>
       </div>
     </el-card>
   </div>
@@ -48,20 +56,27 @@
         methods:{
           submitItem:function(){
             this.addItem.studentId=this.account;
-            this.$store.dispatch('InsertAwarInfo',this.addItem).then(res=>{
-              if(res.status)
-              {
-                this.getAwardInfo();
-                this.$message({
-                  type:'success',
-                  message:res.note
+            this.$refs['addForm'].validate(valid=>{
+              if(valid){
+                this.$store.dispatch('InsertAwarInfo',this.addItem).then(res=>{
+                  if(res.status)
+                  {
+                    this.getAwardInfo();
+                    this.$message({
+                      type:'success',
+                      message:res.note
+                    })
+                    this.$refs['addForm'].resetFields();
+                    this.showAddItem=false;
+                  }else{
+                    this.$message({
+                      type:'warning',
+                      message:res.note
+                    })
+                  }
                 })
-                this.showAddItem=false;
               }else{
-                this.$message({
-                  type:'warning',
-                  message:res.note
-                })
+                return false;
               }
             })
           },

@@ -41,6 +41,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
     export default {
         name: "PoorStudentInfo",
         data(){
@@ -48,8 +49,11 @@
             tableData:[]
           }
         },
+        computed:{
+          ...mapGetters(['account'])
+        },
         created(){
-          this.$store.dispatch('AllPoorList',2007010901).then(res=>{
+          this.$store.dispatch('AllPoorList',this.account).then(res=>{
             console.log(res);
             this.tableData=res.content;
           })

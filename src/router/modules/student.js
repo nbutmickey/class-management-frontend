@@ -15,7 +15,7 @@ const studentRouter = {
       name:'personalInfo',
       meta:{
         title:'个人信息管理',
-        icon:'student-personal',
+        icon:'fa fa-cog fa-fw',
         role:['student']
       }
     },
@@ -25,7 +25,7 @@ const studentRouter = {
       name:'activityInfoManage',
       meta:{
         title:'党团活动管理',
-        icon:'student-activity',
+        icon:'fa fa-cog fa-fw',
         role:['student']
       }
     },
@@ -35,7 +35,7 @@ const studentRouter = {
       name:'AwardInfoManage',
       meta:{
         title:'获奖信息管理',
-        icon:'student-award',
+        icon:'fa fa-cog fa-fw',
         role:['student']
       }
     },
@@ -45,7 +45,7 @@ const studentRouter = {
       name:'applyBedRoomChief',
       meta:{
         title:'寝室长申请',
-        icon:'student-applyBedChief',
+        icon:'fa fa-cog fa-fw',
         role:['student']
       }
     },
@@ -55,7 +55,7 @@ const studentRouter = {
       name:'ApplyPoor',
       meta:{
         title:'贫困生申请',
-        icon:'student-applyPoor',
+        icon:'fa fa-cog fa-fw',
         role:['student']
       }
     }

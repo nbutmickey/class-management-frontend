@@ -9,9 +9,9 @@
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item><svg-icon icon-class="role"/> {{roleName}}</el-dropdown-item>
-        <el-dropdown-item><svg-icon icon-class="username"/> {{account}}</el-dropdown-item>
-        <el-dropdown-item><svg-icon icon-class="logout" style="font-size: 20px"/><span @click="logOut">退出登录</span></el-dropdown-item>
+        <el-dropdown-item><i class="fa fa-user-circle-o fa-fw"></i> {{roleName}}</el-dropdown-item>
+        <el-dropdown-item><i class="fa fa-user fa-fw"></i> {{account}}</el-dropdown-item>
+        <el-dropdown-item><span @click="logOut"><i class="fa fa-sign-out fa-fw"></i>退出登录</span></el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     </div>

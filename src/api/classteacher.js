@@ -29,10 +29,31 @@ export function setClassPosition(classPosition) {
     url:`/setClassPosition`,
     method:'POST',
     data:{
-      classPosition:classPosition
+      classPosition:{
+        position:classPosition.position,
+        studentId:classPosition.studentId
+      }
     }
   })
 }
+
+export function getClassPoorCheck(jobId) {
+  return request({
+    url:`/getClassPoorCheck/${jobId}`,
+    method:'GET'
+  })
+}
+
+export function approvedPoorByClassTeacher(poorAttitude){
+  return request({
+    url:'/approvedPoorByClassTeacher',
+    method:'POST',
+    data:{
+      poorAttitude:poorAttitude
+    }
+  })
+}
+
 
 export function poorInfoByClass(jobId) {
   return request({
@@ -59,7 +80,7 @@ export function classTeacherScheme(schemeInfo) {
 
 export function classMeetingRecord(meetingInfo) {
  return request({
-   url:'/fillClasssMeetingRecord',
+   url:'/fillClassMeetingRecord',
    method:'POST',
    data:{
      meetingInfo:meetingInfo
@@ -141,5 +162,30 @@ export function submitClassTInfo(classTInfo) {
     data:{
       classTInfo:classTInfo
     }
+  })
+}
+
+export function emergencyInfoList(jobId) {
+  return request({
+    url:`/emergencyRecordList/${jobId}`,
+    method:'GET'
+  })
+}
+export function stuTalkInfoList(jobId) {
+  return request({
+    url:`/stuTalkRecordList/${jobId}`,
+    method:'GET'
+  })
+}
+export function classMeetingInfoList(jobId) {
+  return request({
+    url:`/classMeetingRecordList/${jobId}`,
+    method:'GET'
+  })
+}
+export function dormitoryInfoList(jobId) {
+  return request({
+    url:`/dormitoryRecordList/${jobId}`,
+    method:'GET'
   })
 }

@@ -60,7 +60,8 @@
 </template>
 
 <script>
-    import tablePagination from '../../components/tablePagination/index'
+    import tablePagination from '../../components/tablePagination/index';
+    import {mapGetters} from 'vuex'
     export default {
         name: "StudentInfo",
         data(){
@@ -72,6 +73,9 @@
               pageSize:20
             },
           }
+        },
+        computed:{
+          ...mapGetters(['account'])
         },
         components:{ tablePagination },
         created(){
@@ -93,7 +97,7 @@
             this.pagination.currentPage=val+1;
           },
           getAllStuInfo(){
-            this.$store.dispatch('AllStudentList',{jobId:2007010901,pageSize:20,currentPage:1}).then(res=>{
+            this.$store.dispatch('AllStudentList',{jobId:this.account,pageSize:20,currentPage:1}).then(res=>{
               console.log(res);
               this.tableData=res.content.data;
               this.pageInfo.total=res.content.total;

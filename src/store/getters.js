@@ -6,6 +6,8 @@ const getters = {
   username:state=>state.app.username,
   account:state=>state.app.account,
   permission_routers: state => state.permission.routers,
+  schemeInfo:state=>state.classteacher.schemeInfo,
+  stuInfo:state=>state.student.stuInfo
 }
 
 export default getters;
