@@ -14,7 +14,7 @@
             required: true, message: '请选择学期', trigger: 'change'
           }"
         >
-          <el-select v-model="scheme.semester">
+          <el-select v-model="scheme.semester" :disabled="isDisabled">
             <el-option
               v-for="(item, index) in options"
               :key="index"
@@ -76,6 +76,7 @@ export default {
     return {
       showForm: true,
       isLoading:false,
+      isDisabled:false,
       options: [
         "2018-2019 学年第一学期",
         "2018-2019 学年第二学期",
@@ -85,7 +86,8 @@ export default {
       scheme: {
         jobId: "",
         semester: "",
-        content: ""
+        content: "",
+        update:false
       }
     };
   },
@@ -107,6 +109,7 @@ export default {
             .replace(/\n/g, "<br/>")
             .replace(/\s/g, " ");
           //向后端发起请求存储工作计划
+          this.schemeInfo.update=this.scheme.update;
           this.$store.dispatch('ClassTeacherScheme',this.schemeInfo).then(res=>{
             if(res.status){
               this.$message({
@@ -131,7 +134,11 @@ export default {
       });
     },
     updateScheme: function() {
+      //let fields = this.$refs['schemeForm'].fields;
+      //console.log(fields);
       this.showForm = true;
+      this.scheme.update=true;
+      this.isDisabled=true;
       this.scheme.semester=this.schemeInfo.semester;
       this.scheme.content=this.schemeInfo.content.replace("<br/>",'\r\n').replace("<br/>",'\n').replace("<br/>",'\s');
     }

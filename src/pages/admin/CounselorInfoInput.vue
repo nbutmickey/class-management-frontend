@@ -3,7 +3,7 @@
       <div class="counselor-info">
         <el-tabs tab-position="left" >
           <el-tab-pane label="手动录入">
-            <el-form ref="counselorform" :model="counselorInfoInput" label-width="80px" size="mini" :rules="counselorInfoRules">
+            <el-form ref="counselorform" :model="counselorInfoInput" label-width="90px" size="mini" :rules="counselorInfoRules">
               <el-form-item label="工号:" prop="jobId">
                 <el-input v-model="counselorInfoInput.jobId" placeholder="请输入工号"></el-input>
               </el-form-item>
@@ -31,7 +31,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item size="large">
-                <el-button type="primary" @click="submitcounselorinfo">提交信息</el-button>
+                <el-button type="primary" @click="submitcounselorinfo('counselorform')">提交信息</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -81,7 +81,10 @@
             classId:[]
           },
           counselorInfoRules:{
-            jobId:[{required:true,trigger:'blur',validator:validateJobId2},{required:true,trigger:'blur',validator:validateJobId}]
+            jobId:[{required:true,trigger:'blur',validator:validateJobId2},{required:true,trigger:'blur',validator:validateJobId}],
+            name:[{required:true,trigger:'blur',message:'姓名不能为空'}],
+            collegeId:[{required:true,trigger:'changed',message:'学院不能为空'}],
+            classId:[{required:true,trigger:'changed',message:'班级不能为空'}]
           },
           classOptions:[],
           collegeOptions:[],
@@ -103,16 +106,23 @@
             this.collegeOptions=res.content;
           })
         },
-        submitcounselorinfo:function(){
-          console.log(this.counselorInfoInput);
-          this.$store.dispatch('SubmitInfo',{info:this.counselorInfoInput,type:'counselor'}).then((res)=>{
-            if(res.status){
-              this.$message.success(res.note);
-              this.$refs['counselorform'].resetFields();
-            }else{
-              this.$message.error(res.note);
-            }
+        submitcounselorinfo:function(formName){
+          //console.log(this.counselorInfoInput);
+          this.$refs[formName].validate(valid=>{
+          if(valid){
+            this.$store.dispatch('SubmitInfo',{info:this.counselorInfoInput,type:'counselor'}).then((res)=>{
+              if(res.status){
+                this.$message.success(res.note);
+                this.$refs['counselorform'].resetFields();
+              }else{
+                this.$message.error(res.note);
+              }
+            })
+          } else{
+            return false;
+          }
           })
+
         },
         submitexcelcouninfo:function () {
           let counselorInfo={

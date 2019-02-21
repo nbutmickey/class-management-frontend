@@ -20,7 +20,9 @@ import {checkRepeat,
         classMeetingInfoList,
         dormitoryInfoList,
         getClassPoorCheck,
-    approvedPoorByClassTeacher
+    approvedPoorByClassTeacher,
+  getViolationRecordList,
+  fillViolationRecord
 } from "../../api/classteacher";
 
 const classteacher={
@@ -28,7 +30,8 @@ const classteacher={
     schemeInfo:{
       jobId:'',
       semester:'',
-      content:''
+      content:'',
+      update:false
     }
   },
   mutations:{
@@ -39,6 +42,20 @@ const classteacher={
     }
   },
   actions:{
+    GetViolationRecordList({commit},jobId){
+      return new Promise((resolve,reject)=>{
+        getViolationRecordList(jobId).then(res=>{
+          resolve(res);
+        })
+      })
+    },
+    FillViolationRecord({commit},vioInfo){
+      return new Promise((resolve,reject)=>{
+        fillViolationRecord(vioInfo).then(res=>{
+          resolve(res);
+        })
+      })
+    },
     GetClassPoorCheck({commit},jobId){
       return new Promise((resolve,reject)=>{
         getClassPoorCheck(jobId).then(res=>{

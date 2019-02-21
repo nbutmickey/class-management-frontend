@@ -3,8 +3,8 @@
     <div class="stu-info">
       <el-tabs tab-position="left" >
         <el-tab-pane label="手动录入">
-            <el-form ref="stuform" :model="stuInfoInput" label-width="80px" size="mini" :rules="stuInfoRules">
-                <el-form-item label="学号:" prop="studentId">
+            <el-form ref="stuform" :model="stuInfoInput" label-width="90px" size="mini" :rules="stuInfoRules">
+                <el-form-item label="学号:" prop="studentId" >
                   <el-input v-model="stuInfoInput.studentId" placeholder="请输入学号"></el-input>
                 </el-form-item>
               <el-form-item label="姓名:" prop="name">
@@ -73,6 +73,26 @@
                   </el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item label="寝室楼号:" prop="buildId">
+              <el-select v-model="stuInfoInput.buildId" placeholder="请选择楼号">
+                <el-option
+                  v-for="item in buildOptions"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+                </el-option>
+              </el-select>
+            </el-form-item>
+              <el-form-item label="寝室号:" prop="bedRoomId">
+                <el-select v-model="stuInfoInput.bedRoomId" placeholder="请选择寝室号">
+                  <el-option
+                    v-for="item in bedRoomOptions"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
               <el-form-item label="联系方式:" prop="contact">
                 <el-input v-model="stuInfoInput.contact" placeholder="请输入联系方式"></el-input>
               </el-form-item>
@@ -85,7 +105,7 @@
                 </el-input>
               </el-form-item>
               <el-form-item size="large">
-                <el-button type="primary" @click="submitstuinfo">提交信息</el-button>
+                <el-button type="primary" @click="submitstuinfo('stuform')">提交信息</el-button>
               </el-form-item>
             </el-form>
         </el-tab-pane>
@@ -139,6 +159,9 @@
             closeable:false,
             tableData:[],
             tableHeader:[],
+            //楼号
+            buildOptions:[1,2,3,4,5,6,7,8,9,10,11,12,13],
+            bedRoomOptions:[101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120],
             //班级职务
             classPositionOptions:[],
             //政治面貌
@@ -157,12 +180,22 @@
             collegeOptions:[],
             birthplace:[],
             stuInfoRules:{
-              studentId:[{required:true,trigger:'blur',validator:validateStudentId2},{required:true,trigger:'blur',validator:validateStudentId}]
+              studentId:[{required:true,trigger:'blur',validator:validateStudentId2},{required:true,trigger:'blur',validator:validateStudentId},{ required: true, message: '请输入学号', trigger: 'blur' },],
+              name:[{required:true,message:'姓名不能为空',trigger:'blur'}],
+              collegeId:[{required:true,message:'学院不能为空',trigger:'changed'}],
+              classId:[{required:true,message:'班级不能为空',trigger:'changed'}],
+              birthpalce:[{required:true,message:'班级不能为空',trigger:'changed'}],
+              birthday:[{required:true,message:'班级不能为空',trigger:'changed'}],
+              partySituation:[{required:true,message:'政治面貌不能为空',trigger:'changed'}],
+              contact:[{required:true,message:'联系方式不能为空',trigger:'blur'}],
+              position:[{required:true,message:'班级职位不能为空',trigger:'changed'}],
+              bedRoomId:[{required:true,message:'寝室号不能为空',trigger:'changed'}],
+              buildId:[{required:true,message:'寝室楼号不能为空',trigger:'changed'}]
             },
             stuInfoInput:{
               studentId:'',
               name:'',
-              sex:'',
+              sex:'男',
               collegeId:'',
               classId:'',
               birthplace:'',
@@ -171,6 +204,8 @@
               contact:'',
               position:'',
               other:'',
+              bedRoomId:'',
+              buildId:''
             }
           }
         },
@@ -189,15 +224,21 @@
             })
           },
           //上传学生信息
-          submitstuinfo:function () {
-            this.stuInfoInput.birthplace=this.birthplace.join('');
-            this.$store.dispatch('SubmitInfo',{info:this.stuInfoInput,type:'student'}).then((res)=>{
-              if(res.status){
-                this.$message.success(res.note);
-                this.$refs['stuform'].resetFields();
-                this.birthplace=[];
+          submitstuinfo:function (formName) {
+            this.$refs[formName].validate(valid=>{
+              if(valid){
+                this.stuInfoInput.birthplace=this.birthplace.join('');
+                this.$store.dispatch('SubmitInfo',{info:this.stuInfoInput,type:'student'}).then((res)=>{
+                  if(res.status){
+                    this.$message.success(res.note);
+                    this.$refs[formName].resetFields();
+                    this.birthplace=[];
+                  }else{
+                    this.$message.error(res.note);
+                  }
+                })
               }else{
-                this.$message.error(res.note);
+                return false;
               }
             })
           },
@@ -212,7 +253,7 @@
                 multipleInfo:[],
               };
               stuInfo.multipleInfo=this.tableData;
-              console.log(stuInfo.multipleInfo);
+              //console.log(stuInfo.multipleInfo);
               this.$store.dispatch('SubmitExcelInfo',{info:stuInfo.multipleInfo,type:'student'}).then(res=>{
                 if(res.status){
                   this.$message({

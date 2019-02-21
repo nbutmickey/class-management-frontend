@@ -26,8 +26,7 @@
           :tableLabel="[  {label:'学号',param:'studentId'},
                           {label:'姓名',param:'name'},
                           {label:'楼号',param:'buildId'},
-                          {label:'寝室号',param:'bedRoomId'},
-                          {label:'申请日期',param:'applydate'}]"
+                          {label:'寝室号',param:'bedRoomId'}]"
           :tableOption="{
                           label:'操作',
                           options:[{label:'同意',type:'primary',icon:'',methods:'approved',width:'200'},
@@ -51,7 +50,7 @@
     :tableOption="{label:'操作',
                           options:[{label:'异动寝室',type:'primary',icon:'',methods:'changeBedRoom',width:'200'},
                                    ]}"
-    @handleChangeButton="handleChangeButton"
+
   ></detail-dialog>
   </div>
 </template>

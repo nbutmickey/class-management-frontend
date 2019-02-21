@@ -128,26 +128,6 @@ const classteacherRouter = {
         icon:'fa fa-inbox fa-fw',
         role:['classteacher']
       }
-    },
-    {
-      path: 'bedroomHygieneRecord',
-      component: () => import('@/pages/classteacher/bedroomHygieneRecord'),
-      name:'bedroomHygieneRecord',
-      meta:{
-        title:'寝室卫生情况',
-        icon:'fa fa-inbox fa-fw',
-        role:['classteacher']
-      }
-    },
-    {
-      path: 'handBook',
-      component: () => import('@/pages/classteacher/HandBook'),
-      name:'handBook',
-      meta:{
-        title:'班主任工作手册',
-        icon:'fa fa-address-book-o fa-w',
-        role:['classteacher']
-      }
     }
   ]
 }

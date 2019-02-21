@@ -189,3 +189,19 @@ export function dormitoryInfoList(jobId) {
     method:'GET'
   })
 }
+export function getViolationRecordList(jobId) {
+  return request({
+    url:`/getViolationRecordList/${jobId}`,
+    method:'GET'
+  })
+}
+
+export function fillViolationRecord(vioInfo) {
+  return request({
+    url:'/fillViolationRecord',
+    method:'POST',
+    data:{
+      violationRecord:vioInfo
+    }
+  })
+}

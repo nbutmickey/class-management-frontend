@@ -73,49 +73,43 @@
       </el-form>
     </el-tab-pane>
     <el-tab-pane label="学生违纪记录表" name="RecordList">
-      <!--<el-card v-for="(item,index) in talkRecordList" style="width: 45%;margin:20px 40px 20px 20px;display: inline-block" :key="index">-->
-        <!--<div slot="header" class="clearfix">-->
-          <!--<span>谈话记录表 {{index+1}}</span>-->
-        <!--</div>-->
-        <!--<el-form label-width="20px">-->
-          <!--<el-form-item>-->
-            <!--<label>学生</label>-->
-            <!--<span>{{item.studentName}}</span>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item>-->
-            <!--<label>谈话时间</label>-->
-            <!--<span>{{TimeFormat(item.talkTime)}}</span>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item>-->
-            <!--<label>谈话次数</label>-->
-            <!--<span>{{item.times}}</span>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item>-->
-            <!--<label>问题归类</label>-->
-            <!--<span>{{item.types}}</span>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item>-->
-            <!--<label>主要问题</label>-->
-            <!--<span>{{item.mainProblem}}</span>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item>-->
-            <!--<label>辅导意见</label>-->
-            <!--<span>{{item.kpOfCounseling}}</span>-->
-          <!--</el-form-item>-->
-        <!--</el-form>-->
-      <!--</el-card>-->
+      <el-card v-for="(item,index) in vioRecordList" style="width: 45%;margin:20px 40px 20px 20px;display: inline-block" :key="index">
+        <div slot="header" class="clearfix">
+          <span>违纪记录表 {{index+1}}</span>
+        </div>
+        <el-form label-width="20px">
+          <el-form-item>
+            <label>学生</label>
+            <span>{{item.name}}</span>
+          </el-form-item>
+          <el-form-item>
+            <label>违纪时间</label>
+            <span>{{TimeFormat(item.violationTime)}}</span>
+          </el-form-item>
+          <el-form-item>
+            <label>违纪等级</label>
+            <span>{{item.violationDegree==='1'?'普通违纪':'严重违纪'}}</span>
+          </el-form-item>
+          <el-form-item>
+            <label>违纪内容</label>
+            <span>{{item.violationContent}}</span>
+          </el-form-item>
+        </el-form>
+      </el-card>
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
-    import {mapGetters,mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
+    import {formateTime} from "../../utils/formatDate";
     export default {
         name: "ViolationRecord",
         data(){
           return {
             activeName:'fillRecord',
             stuInfoOptions:[],
+            vioRecordList:[],
             violationRecord:{
               jobId:'',
               studentId:'',
@@ -130,6 +124,7 @@
           this.violationRecord.jobId = parseInt(this.account);
           this.$store.dispatch('AllStuInfoByClass',this.account).then(res=>{
           this.stuInfoOptions=res.content;
+          this.getVioRecordList();
         })
       },
       computed:{
@@ -141,12 +136,33 @@
           //console.log(this.violationRecord);
           this.$refs[formName].validate((valid)=>{
             if(valid){
-
+              this.$store.dispatch('FillViolationRecord',this.violationRecord).then(res=>{
+                if(res.status){
+                  this.$notify({
+                    type: "success",
+                    message: "成功"
+                  });
+                  this.getVioRecordList();
+                  this.activeName='RecordList';
+                  this.$refs[formName].resetFields();
+                }else{
+                  this.$notify({
+                    type: "danger",
+                    message: res.note
+                  });
+                }
+              })
             }else{
               return false;
             }
           })
         },
+        getVioRecordList(){
+          this.$store.dispatch('GetViolationRecordList',this.account).then(res=>{
+            this.vioRecordList=res.content;
+          })
+        },
+        TimeFormat:formateTime
       }
     }
 </script>

@@ -6,7 +6,7 @@
           <el-form
             ref="teacherform"
             :model="teacherInfoInput"
-            label-width="80px"
+            label-width="90px"
             size="mini"
             :rules="teacherInfoRules"
           >
@@ -52,7 +52,7 @@
               </el-select>
             </el-form-item>
             <el-form-item size="large">
-              <el-button type="primary" @click="submitteainfo"
+              <el-button type="primary" @click="submitteainfo('teacherform')"
                 >提交信息</el-button
               >
             </el-form-item>
@@ -125,7 +125,10 @@ export default {
         jobId: [
           { required: true, trigger: "blur", validator: validateJobId2 },
           { required: true, trigger: "blur", validator: validateJobId }
-        ]
+        ],
+        name:[{required:true,message:'姓名不能为空',trigger:'blur'}],
+        collegeId:[{required:true,message:'学院不能为空',trigger:'changed'}],
+        classId:[{required:true,message:'班级不能为空',trigger:'changed'}]
       },
       classOptions: [],
       collegeOptions: [],
@@ -147,20 +150,26 @@ export default {
         this.collegeOptions = res.content;
       });
     },
-    submitteainfo: function() {
-      this.$store
-        .dispatch("SubmitInfo", {
-          info: this.teacherInfoInput,
-          type: "classteacher"
-        })
-        .then(res => {
-          if (res.status) {
-            this.$message.success(res.note);
-            this.$refs["teacherform"].resetFields();
-          } else {
-            this.$message.error(res.note);
-          }
-        });
+    submitteainfo: function(formName) {
+      this.$refs[formName].validate(valid=>{
+        if(valid){
+          this.$store
+            .dispatch("SubmitInfo", {
+              info: this.teacherInfoInput,
+              type: "classteacher"
+            })
+            .then(res => {
+              if (res.status) {
+                this.$message.success(res.note);
+                this.$refs["teacherform"].resetFields();
+              } else {
+                this.$message.error(res.note);
+              }
+            });
+        }else{
+          return false;
+        }
+      })
     },
     submitexcelteainfo: function() {
       let classteacherInfo = {

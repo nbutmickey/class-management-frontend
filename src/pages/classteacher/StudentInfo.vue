@@ -53,8 +53,15 @@
         },
         created(){
           this.$store.dispatch('AllStuInfoByClass',this.account).then(res=>{
-            console.log(res.content);
-            this.tableData=res.content;
+            if(res.status){
+              //console.log(res.content);
+              this.tableData=res.content;
+            }else{
+             this.$notify({
+               type:'danger',
+               message:res.note
+             })
+            }
           })
         },
         methods:{

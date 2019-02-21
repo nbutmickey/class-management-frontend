@@ -145,7 +145,7 @@
             this.$store.dispatch('GetPersonalInfo',this.account).then((res)=>{
                 console.log(res.content);
                 this.personInfo=res.content;
-                this.setStuInfo(this.personInfo);
+                this.setStuInfo(Object.assign({},this.personInfo));
             })
           },
           ...mapMutations({
