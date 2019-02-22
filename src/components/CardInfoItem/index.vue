@@ -8,7 +8,7 @@
         :key="index"
         style="margin: 5px 0"
       >
-        <span>{{ item.stuName }}</span>
+        <span>{{ item.name }}</span>
         <el-button
           style="float: right; padding: 3px 0"
           type="text"
