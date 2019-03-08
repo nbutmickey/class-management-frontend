@@ -13,6 +13,10 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(Element)
 
+import axios from 'axios'
+Vue.prototype.$http=axios;
+
+
 import '@/icons' // icon
 
 /* eslint-disable no-new */

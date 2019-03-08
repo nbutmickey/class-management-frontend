@@ -5,38 +5,39 @@
       style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
+          <el-form label-position="left" inline class="demo-table-expand" v-if="props.row.classCommittee.length!==0">
             <el-form-item label="班长">
-              <span>{{ props.row.monitor }}</span>
+              <span>{{ props.row.classCommittee[0].monitor }}</span>
             </el-form-item>
             <el-form-item label="团支书">
-              <span>{{ props.row.communistParty }}</span>
+              <span>{{ props.row.classCommittee[0].communistParty }}</span>
             </el-form-item>
             <el-form-item label="副班长">
-              <span>{{ props.row.associateMonitor }}</span>
+              <span>{{ props.row.classCommittee[0].associateMonitor }}</span>
             </el-form-item>
             <el-form-item label="学习委员">
-              <span>{{ props.row.study }}</span>
+              <span>{{ props.row.classCommittee[0].study }}</span>
             </el-form-item>
             <el-form-item label="生活委员">
-              <span>{{ props.row.life }}</span>
+              <span>{{ props.row.classCommittee[0].life }}</span>
             </el-form-item>
             <el-form-item label="纪律委员">
-              <span>{{ props.row.discipline }}</span>
+              <span>{{ props.row.classCommittee[0].discipline }}</span>
             </el-form-item>
             <el-form-item label="宣传委员">
-              <span>{{ props.row.propaganda }}</span>
+              <span>{{ props.row.classCommittee[0].propaganda }}</span>
             </el-form-item>
             <el-form-item label="体育委员">
-              <span>{{ props.row.sport }}</span>
+              <span>{{ props.row.classCommittee[0].sport }}</span>
             </el-form-item>
             <el-form-item label="组织委员">
-              <span>{{ props.row.organize }}</span>
+              <span>{{ props.row.classCommittee[0].organize }}</span>
             </el-form-item>
             <el-form-item label="治保委员">
-              <span>{{ props.row.security }}</span>
+              <span>{{ props.row.classCommittee[0].security }}</span>
             </el-form-item>
           </el-form>
+          <div v-else style="text-align: center"><p>该班级暂时还没有班级信息</p></div>
         </template>
       </el-table-column>
       <el-table-column

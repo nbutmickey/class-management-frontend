@@ -23,6 +23,8 @@ const admin={
       return new Promise((resolve,reject)=>{
         getCollegeInfo().then((res)=>{
           resolve(res);
+        },(error)=>{
+          reject(error);
         })
       })
     },

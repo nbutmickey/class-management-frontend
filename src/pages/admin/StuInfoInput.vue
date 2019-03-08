@@ -117,6 +117,9 @@
             </el-table>
             <el-button @click="submitexcelstuinfo" style="width: 100%;margin-top: 20px" type="primary">上传数据<i class="el-icon-upload el-icon--right"></i></el-button>
         </el-tab-pane>
+        <el-tab-pane label="学生信息">
+
+        </el-tab-pane>
       </el-tabs>
     </div>
 
@@ -221,7 +224,7 @@
           getcollegeinfo:function () {
             this.$store.dispatch('GetCollegeInfo').then((res)=>{
               this.collegeOptions=res.content;
-            })
+            },(error)=>{console.log(error);})
           },
           //上传学生信息
           submitstuinfo:function (formName) {

@@ -63,26 +63,30 @@
             :on-success="handleSuccess"
             :before-upload="beforeUpload"
           />
-          <h4 style="text-align: center;">以下是需要上传的表格数据</h4>
-          <el-table
-            :data="tableData"
-            background
-            style="width: 100%;margin-top: 20px"
-          >
-            <el-table-column
-              v-for="item in tableHeader"
-              :prop="item"
-              :label="item"
-              :key="item"
-            ></el-table-column>
-          </el-table>
-          <el-button
-            @click="submitexcelteainfo"
-            style="width: 100%;margin-top: 20px"
-            type="primary"
-            >上传数据<i class="el-icon-upload el-icon--right"></i
-          ></el-button>
+        <h4 style="text-align: center;">以下是需要上传的表格数据</h4>
+        <el-table
+          :data="tableData"
+          background
+          style="width: 100%;margin-top: 20px"
+        >
+          <el-table-column
+            v-for="item in tableHeader"
+            :prop="item"
+            :label="item"
+            :key="item"
+          ></el-table-column>
+        </el-table>
+        <el-button
+          @click="submitexcelteainfo"
+          style="width: 100%;margin-top: 20px"
+          type="primary"
+        >上传数据<i class="el-icon-upload el-icon--right"></i
+        ></el-button>
         </el-tab-pane>
+
+       <el-tab-pane label="班主任信息">
+
+       </el-tab-pane>
       </el-tabs>
     </div>
   </div>

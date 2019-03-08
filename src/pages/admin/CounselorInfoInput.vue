@@ -43,6 +43,9 @@
             </el-table>
             <el-button @click="submitexcelcouninfo" style="width: 100%;margin-top: 20px" type="primary">上传数据<i class="el-icon-upload el-icon--right"></i></el-button>
           </el-tab-pane>
+          <el-tab-pane label="辅导员信息">
+
+          </el-tab-pane>
         </el-tabs>
       </div>
 
